@@ -152,6 +152,8 @@
       display: flex;
       align-items: center;
       gap: 12px;
+      cursor: pointer;
+      text-decoration: none;
     }
     .nav-logo {
       height: 52px;
@@ -1431,10 +1433,10 @@
        SECTION 1 — NAVBAR
   ═══════════════════════════════════════ -->
   <header id="navbar" role="banner">
-    <div class="nav-brand">
+    <a class="nav-brand" href="#" aria-label="Retour en haut" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">
       <img src="foto%20de%20cgs%20/CGS_Customer_Ground_Services_Logo_RGB.png" alt="CGS Porter Service" class="nav-logo" onerror="this.style.display='none';this.nextElementSibling.style.display='block'" />
       <span class="nav-brand-text" style="display:none">CGS</span>
-    </div>
+    </a>
     <nav class="nav-links" aria-label="Navigation principale">
       <a href="#services" data-i18n="navServices">Services</a>
       <a href="#tarifs" data-i18n="navTarifs">Tarifs</a>
