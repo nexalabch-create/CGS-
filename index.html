@@ -697,6 +697,7 @@
       transition: background var(--transition), transform var(--transition), box-shadow var(--transition);
       flex-shrink: 0;
       animation: pulse 3s ease infinite;
+      touch-action: manipulation;
     }
     .calc-btn:hover { background: var(--accent-hover); transform: scale(1.1); box-shadow: 0 6px 20px rgba(233,30,140,0.4); }
     .calc-btn:active { transform: scale(0.95); }
@@ -1031,10 +1032,11 @@
       border: 1.5px solid transparent;
       border-radius: var(--radius);
       padding: 0 14px;
-      font-size: 0.95rem;
+      font-size: 1rem;
       color: var(--dark);
       transition: border-color var(--transition), box-shadow var(--transition);
       width: 100%;
+      touch-action: manipulation;
     }
     .form-control:focus {
       outline: none;
