@@ -2489,7 +2489,7 @@
     });
 
     /* ── BILINGUAL i18n ── */
-    const TRANS = {
+    var TRANS = {
       fr: {
         pageTitle: 'CGS Porter Service — Aéroport de Genève GVA',
         metaDesc: 'CGS Porter Service — Service de porteur professionnel à l\'aéroport de Genève GVA. Départ, arrivée, transit. Disponible 7j/7. Dès CHF 25.',
@@ -2694,7 +2694,7 @@
       }
     };
 
-    let currentLang = localStorage.getItem('cgs-lang') || 'fr';
+    var currentLang = localStorage.getItem('cgs-lang') || 'fr';
 
     function setLang(lang) {
       currentLang = lang;
