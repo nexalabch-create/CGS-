@@ -1366,6 +1366,40 @@
     }
 
     /* ── Reduced motion guard ── */
+    /* ─── LANGUAGE SWITCHER ─── */
+    .lang-switcher {
+      display: flex;
+      align-items: center;
+      background: rgba(255,255,255,0.1);
+      border-radius: var(--radius-pill);
+      padding: 2px;
+      gap: 2px;
+      flex-shrink: 0;
+    }
+    #navbar.scrolled .lang-switcher { background: var(--bg-light); }
+    .lang-btn {
+      padding: 5px 9px;
+      border-radius: var(--radius-pill);
+      font-family: var(--font-head);
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: rgba(255,255,255,0.55);
+      transition: all 0.2s;
+      letter-spacing: 0.05em;
+      touch-action: manipulation;
+    }
+    .lang-btn.active { background: var(--accent); color: var(--white); }
+    .lang-btn:hover:not(.active) { color: var(--white); }
+    #navbar.scrolled .lang-btn { color: var(--gray); }
+    #navbar.scrolled .lang-btn.active { background: var(--accent); color: var(--white); }
+    /* Mobile nav lang switcher */
+    #mobile-nav .lang-switcher {
+      background: rgba(255,255,255,0.08);
+      margin-top: 8px;
+    }
+    #mobile-nav .lang-btn { font-size: 0.85rem; padding: 8px 18px; color: rgba(255,255,255,0.5); }
+    #mobile-nav .lang-btn.active { background: var(--accent); color: var(--white); }
+
     @media (prefers-reduced-motion: reduce) {
       .hero-badge, .hero-orb-1, .hero-orb-2, #stats, #final-cta, .step-circle { animation: none !important; }
       .fade-left, .fade-right, .scale-in {
@@ -1381,11 +1415,15 @@
        MOBILE NAV OVERLAY
   ═══════════════════════════════════════ -->
   <nav id="mobile-nav" aria-label="Navigation mobile" role="dialog" aria-modal="true">
-    <a href="#services" onclick="closeMobileNav()">Services</a>
-    <a href="#tarifs" onclick="closeMobileNav()">Tarifs</a>
-    <a href="#gallery" onclick="closeMobileNav()">Galerie</a>
-    <a href="#faq" onclick="closeMobileNav()">FAQ</a>
-    <a href="#reservation" onclick="closeMobileNav()" class="btn btn-magenta">Réserver</a>
+    <a href="#services" onclick="closeMobileNav()" data-i18n="navServices">Services</a>
+    <a href="#tarifs" onclick="closeMobileNav()" data-i18n="navTarifs">Tarifs</a>
+    <a href="#gallery" onclick="closeMobileNav()" data-i18n="navGallery">Galerie</a>
+    <a href="#faq" onclick="closeMobileNav()" data-i18n="navFaq">FAQ</a>
+    <a href="#reservation" onclick="closeMobileNav()" class="btn btn-magenta" data-i18n="navBook">Réserver</a>
+    <div class="lang-switcher" id="mob-lang-switcher">
+      <button class="lang-btn active" onclick="setLang('fr');closeMobileNav()" id="mob-btn-fr" aria-label="Français">FR</button>
+      <button class="lang-btn" onclick="setLang('en');closeMobileNav()" id="mob-btn-en" aria-label="English">EN</button>
+    </div>
     <p class="mobile-phone">+41 (0)76 330 71 98</p>
   </nav>
 
@@ -1398,14 +1436,18 @@
       <span class="nav-brand-text" style="display:none">CGS</span>
     </div>
     <nav class="nav-links" aria-label="Navigation principale">
-      <a href="#services">Services</a>
-      <a href="#tarifs">Tarifs</a>
-      <a href="#gallery">Galerie</a>
-      <a href="#faq">FAQ</a>
+      <a href="#services" data-i18n="navServices">Services</a>
+      <a href="#tarifs" data-i18n="navTarifs">Tarifs</a>
+      <a href="#gallery" data-i18n="navGallery">Galerie</a>
+      <a href="#faq" data-i18n="navFaq">FAQ</a>
     </nav>
     <div class="nav-right">
       <span class="nav-phone">+41 (0)76 330 71 98</span>
-      <a href="#reservation" class="btn btn-magenta nav-cta">Réserver</a>
+      <div class="lang-switcher" id="nav-lang-switcher">
+        <button class="lang-btn active" id="btn-lang-fr" onclick="setLang('fr')" aria-label="Français">FR</button>
+        <button class="lang-btn" id="btn-lang-en" onclick="setLang('en')" aria-label="English">EN</button>
+      </div>
+      <a href="#reservation" class="btn btn-magenta nav-cta" id="nav-cta-btn">Réserver</a>
       <button class="hamburger" id="hamburger" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="mobile-nav">
         <span></span><span></span><span></span>
       </button>
@@ -1427,27 +1469,18 @@
     </div>
     <div class="hero-content">
       <div class="hero-badge">
-        <span class="badge badge-white">✈ Service officiel — Aéroport de Genève GVA</span>
+        <span class="badge badge-white" data-i18n="heroBadge">✈ Service officiel — Aéroport de Genève GVA</span>
       </div>
-      <h1 class="hero-h1">Votre service de porteur à l'aéroport de Genève</h1>
-      <p class="hero-sub">Confiez vos bagages à des professionnels. Départ, arrivée, transit — nous gérons tout.</p>
+      <h1 class="hero-h1" data-i18n="heroH1">Votre service de porteur à l'aéroport de Genève</h1>
+      <p class="hero-sub" data-i18n="heroSub">Confiez vos bagages à des professionnels. Départ, arrivée, transit — nous gérons tout.</p>
       <div class="hero-ctas">
-        <a href="#reservation" class="btn btn-magenta btn-lg">Réserver maintenant →</a>
-        <a href="#tarifs" class="btn btn-outline-white btn-lg">Calculer le tarif</a>
+        <a href="#reservation" class="btn btn-magenta btn-lg" data-i18n="heroBookBtn">Réserver maintenant →</a>
+        <a href="#tarifs" class="btn btn-outline-white btn-lg" data-i18n="heroPriceBtn">Calculer le tarif</a>
       </div>
       <div class="hero-trust">
-        <div class="trust-item">
-          <span class="trust-check">✓</span>
-          Disponible 7j/7
-        </div>
-        <div class="trust-item">
-          <span class="trust-check">✓</span>
-          Dès CHF 25
-        </div>
-        <div class="trust-item">
-          <span class="trust-check">✓</span>
-          Équipe certifiée GVA
-        </div>
+        <div class="trust-item" data-i18n="heroTrust1Html"><span class="trust-check">✓</span> Disponible 7j/7</div>
+        <div class="trust-item" data-i18n="heroTrust2Html"><span class="trust-check">✓</span> Dès CHF 25</div>
+        <div class="trust-item" data-i18n="heroTrust3Html"><span class="trust-check">✓</span> Équipe certifiée GVA</div>
       </div>
     </div>
     <div class="scroll-arrow" onclick="document.getElementById('stats').scrollIntoView({behavior:'smooth'})" aria-label="Défiler vers le bas">
@@ -1462,19 +1495,19 @@
     <div class="stats-grid">
       <div class="stat-item fade-up">
         <div class="stat-number"><span class="count-up" data-target="5000">0</span><span>+</span></div>
-        <div class="stat-label">Voyageurs servis</div>
+        <div class="stat-label" data-i18n="stat1Label">Voyageurs servis</div>
       </div>
       <div class="stat-item fade-up" style="transition-delay:0.1s">
-        <div class="stat-number">7j/7</div>
-        <div class="stat-label">Disponible</div>
+        <div class="stat-number" data-i18n="stat2Number">7j/7</div>
+        <div class="stat-label" data-i18n="stat2Label">Disponible</div>
       </div>
       <div class="stat-item fade-up" style="transition-delay:0.2s">
-        <div class="stat-number">Dès 25 <span style="font-size:1.5rem">CHF</span></div>
-        <div class="stat-label">Par service</div>
+        <div class="stat-number" data-i18n="stat3Number">Dès 25 <span style="font-size:1.5rem">CHF</span></div>
+        <div class="stat-label" data-i18n="stat3Label">Par service</div>
       </div>
       <div class="stat-item fade-up" style="transition-delay:0.3s">
         <div class="stat-number"><span class="count-up" data-target="10">0</span><span>+</span></div>
-        <div class="stat-label">Ans d'expérience</div>
+        <div class="stat-label" data-i18n="stat4Label">Ans d'expérience</div>
       </div>
     </div>
   </section>
@@ -1485,15 +1518,15 @@
   <section id="how" aria-labelledby="how-title">
     <div class="how-inner">
       <div class="section-header center fade-up">
-        <h2 class="section-title" id="how-title">Comment ça fonctionne</h2>
-        <p class="section-subtitle">Un processus simple en 3 étapes pour voyager sans effort</p>
+        <h2 class="section-title" id="how-title" data-i18n="howTitle">Comment ça fonctionne</h2>
+        <p class="section-subtitle" data-i18n="howSub">Un processus simple en 3 étapes pour voyager sans effort</p>
       </div>
       <div class="how-steps">
         <div class="step fade-up">
           <div class="step-circle" aria-hidden="true">1</div>
           <div>
-            <div class="step-title">Réservez en ligne</div>
-            <p class="step-text">Remplissez le formulaire avec vos informations de vol et le nombre de bagages.</p>
+            <div class="step-title" data-i18n="step1Title">Réservez en ligne</div>
+            <p class="step-text" data-i18n="step1Text">Remplissez le formulaire avec vos informations de vol et le nombre de bagages.</p>
           </div>
         </div>
         <div class="step-connector" aria-hidden="true">
@@ -1502,8 +1535,8 @@
         <div class="step fade-up" style="transition-delay:0.15s">
           <div class="step-circle" aria-hidden="true">2</div>
           <div>
-            <div class="step-title">On vous retrouve</div>
-            <p class="step-text">Notre porteur vous attend avec votre pancarte nominative au point de rendez-vous convenu.</p>
+            <div class="step-title" data-i18n="step2Title">On vous retrouve</div>
+            <p class="step-text" data-i18n="step2Text">Notre porteur vous attend avec votre pancarte nominative au point de rendez-vous convenu.</p>
           </div>
         </div>
         <div class="step-connector" aria-hidden="true">
@@ -1512,8 +1545,8 @@
         <div class="step fade-up" style="transition-delay:0.3s">
           <div class="step-circle" aria-hidden="true">3</div>
           <div>
-            <div class="step-title">Voyagez léger</div>
-            <p class="step-text">Nous gérons vos bagages de A à Z jusqu'à destination finale.</p>
+            <div class="step-title" data-i18n="step3Title">Voyagez léger</div>
+            <p class="step-text" data-i18n="step3Text">Nous gérons vos bagages de A à Z jusqu'à destination finale.</p>
           </div>
         </div>
       </div>
@@ -1526,16 +1559,16 @@
   <section id="services" aria-labelledby="services-title">
     <div class="services-inner">
       <div class="section-header center fade-up">
-        <h2 class="section-title" id="services-title">Nos services</h2>
-        <p class="section-subtitle">Une gamme complète pour chaque étape de votre voyage</p>
+        <h2 class="section-title" id="services-title" data-i18n="servicesTitle">Nos services</h2>
+        <p class="section-subtitle" data-i18n="servicesSub">Une gamme complète pour chaque étape de votre voyage</p>
       </div>
 
       <!-- Block 1: text left, image right -->
       <div class="service-block">
         <div class="service-text fade-left">
-          <span class="badge badge-accent">DÉPART</span>
-          <h3 class="service-title">Service de Départ</h3>
-          <p class="service-desc">Votre porteur vous accompagne de l'entrée jusqu'au check-in et au contrôle de sécurité. Vous arrivez détendus à votre gate sans porter un seul bagage.</p>
+          <span class="badge badge-accent" data-i18n="dep_badge">DÉPART</span>
+          <h3 class="service-title" data-i18n="dep_title">Service de Départ</h3>
+          <p class="service-desc" data-i18n="dep_desc">Votre porteur vous accompagne de l'entrée jusqu'au check-in et au contrôle de sécurité. Vous arrivez détendus à votre gate sans porter un seul bagage.</p>
         </div>
         <div class="service-img fade-right">
           <img src="fotos%20de%20servicios/service%20depart.png" alt="Porteur CGS accueillant une famille à l'aéroport" loading="lazy" />
@@ -1545,9 +1578,9 @@
       <!-- Block 2: image left, text right -->
       <div class="service-block reverse">
         <div class="service-text fade-right">
-          <span class="badge badge-accent">ARRIVÉE</span>
-          <h3 class="service-title">Service d'Arrivée</h3>
-          <p class="service-desc">Récupération de vos bagages au tapis, accompagnement jusqu'à la sortie, voiture ou taxi. Aucun effort de votre côté après un long voyage.</p>
+          <span class="badge badge-accent" data-i18n="arr_badge">ARRIVÉE</span>
+          <h3 class="service-title" data-i18n="arr_title">Service d'Arrivée</h3>
+          <p class="service-desc" data-i18n="arr_desc">Récupération de vos bagages au tapis, accompagnement jusqu'à la sortie, voiture ou taxi. Aucun effort de votre côté après un long voyage.</p>
         </div>
         <div class="service-img fade-left">
           <img src="fotos%20de%20servicios/service%20arrives.png" alt="Porteur CGS récupérant les bagages au tapis" loading="lazy" />
@@ -1557,42 +1590,42 @@
       <!-- Block 3: who we serve -->
       <div class="fade-up">
         <div class="section-header center" style="margin-bottom:36px">
-          <h3 class="section-title" style="font-size:clamp(1.4rem,3vw,1.9rem);color:var(--dark)">À qui s'adresse notre service ?</h3>
-          <p class="section-subtitle" style="font-size:0.95rem">Solutions adaptées aux particuliers comme aux professionnels</p>
+          <h3 class="section-title" style="font-size:clamp(1.4rem,3vw,1.9rem);color:var(--dark)" data-i18n="whoTitle">À qui s'adresse notre service ?</h3>
+          <p class="section-subtitle" style="font-size:0.95rem" data-i18n="whoSub">Solutions adaptées aux particuliers comme aux professionnels</p>
         </div>
         <div class="client-cards">
 
           <!-- Particuliers -->
           <div class="client-card">
             <div class="client-card-header">
-              <span class="client-badge client-badge--personal">Particuliers</span>
+              <span class="client-badge client-badge--personal" data-i18n="part_badge">Particuliers</span>
               <div class="client-icon" aria-hidden="true">🧳</div>
             </div>
-            <h4 class="client-title">Voyageurs individuels &amp; familles</h4>
-            <p class="client-desc">Que vous voyagiez seul avec une valise ou en famille avec de nombreux bagages — <strong>nous nous adaptons à chaque situation</strong>, sans minimum ni maximum.</p>
+            <h4 class="client-title" data-i18n="part_title">Voyageurs individuels &amp; familles</h4>
+            <p class="client-desc" data-i18n="part_desc">Que vous voyagiez seul avec une valise ou en famille avec de nombreux bagages — <strong>nous nous adaptons à chaque situation</strong>, sans minimum ni maximum.</p>
             <ul class="client-list">
-              <li><span class="client-check">✓</span> De <strong>1 bagage</strong> à autant que vous en avez</li>
-              <li><span class="client-check">✓</span> Départ &amp; Arrivée — Aéroport de Genève GVA</li>
-              <li><span class="client-check">✓</span> Kiss &amp; Fly, Gare CFF, Hall terminal</li>
-              <li><span class="client-check">✓</span> Objets volumineux (skis, vélos, poussettes…)</li>
-              <li><span class="client-check">✓</span> Tarif transparent dès <strong>CHF 25</strong></li>
+              <li><span class="client-check">✓</span> <span data-i18n="part_li1">De <strong>1 bagage</strong> à autant que vous en avez</span></li>
+              <li><span class="client-check">✓</span> <span data-i18n="part_li2">Départ &amp; Arrivée — Aéroport de Genève GVA</span></li>
+              <li><span class="client-check">✓</span> <span data-i18n="part_li3">Kiss &amp; Fly, Gare CFF, Hall terminal</span></li>
+              <li><span class="client-check">✓</span> <span data-i18n="part_li4">Objets volumineux (skis, vélos, poussettes…)</span></li>
+              <li><span class="client-check">✓</span> <span data-i18n="part_li5">Tarif transparent dès <strong>CHF 25</strong></span></li>
             </ul>
           </div>
 
           <!-- B2B -->
           <div class="client-card client-card--b2b">
             <div class="client-card-header">
-              <span class="client-badge client-badge--b2b">B2B</span>
+              <span class="client-badge client-badge--b2b" data-i18n="b2b_badge">B2B</span>
               <div class="client-icon" aria-hidden="true">🏢</div>
             </div>
-            <h4 class="client-title">Entreprises &amp; Grands Groupes</h4>
-            <p class="client-desc">Des solutions sur-mesure pour les <strong>professionnels et groupes organisés</strong>. Coordination complète, gestion logistique et service prioritaire.</p>
+            <h4 class="client-title" data-i18n="b2b_title">Entreprises &amp; Grands Groupes</h4>
+            <p class="client-desc" data-i18n="b2b_desc">Des solutions sur-mesure pour les <strong>professionnels et groupes organisés</strong>. Coordination complète, gestion logistique et service prioritaire.</p>
             <ul class="client-list">
-              <li><span class="client-check">✓</span> Entreprises &amp; voyages d'affaires</li>
-              <li><span class="client-check">✓</span> Équipes de football &amp; clubs sportifs</li>
-              <li><span class="client-check">✓</span> Ambassades &amp; délégations officielles</li>
-              <li><span class="client-check">✓</span> Groupes touristiques &amp; séminaires</li>
-              <li><span class="client-check">✓</span> Devis personnalisé sur demande</li>
+              <li><span class="client-check">✓</span> <span data-i18n="b2b_li1">Entreprises &amp; voyages d'affaires</span></li>
+              <li><span class="client-check">✓</span> <span data-i18n="b2b_li2">Équipes de football &amp; clubs sportifs</span></li>
+              <li><span class="client-check">✓</span> <span data-i18n="b2b_li3">Ambassades &amp; délégations officielles</span></li>
+              <li><span class="client-check">✓</span> <span data-i18n="b2b_li4">Groupes touristiques &amp; séminaires</span></li>
+              <li><span class="client-check">✓</span> <span data-i18n="b2b_li5">Devis personnalisé sur demande</span></li>
             </ul>
           </div>
 
@@ -1606,12 +1639,12 @@
   ═══════════════════════════════════════ -->
   <section id="tarifs" aria-labelledby="tarifs-title">
     <div class="tarifs-inner">
-      <h2 class="tarifs-title fade-up" id="tarifs-title">Calculez votre tarif en temps réel</h2>
-      <p class="tarifs-sub fade-up">Tarif transparent, sans surprise — Aéroport de Genève GVA</p>
+      <h2 class="tarifs-title fade-up" id="tarifs-title" data-i18n="tarifTitle">Calculez votre tarif en temps réel</h2>
+      <p class="tarifs-sub fade-up" data-i18n="tarifSub">Tarif transparent, sans surprise — Aéroport de Genève GVA</p>
 
       <!-- Step 1: Location -->
       <div class="fade-up" style="transition-delay:0.05s">
-        <p style="font-size:0.75rem;text-transform:uppercase;letter-spacing:0.1em;color:rgba(255,255,255,0.45);margin-bottom:12px;">1. Point de prise en charge</p>
+        <p style="font-size:0.75rem;text-transform:uppercase;letter-spacing:0.1em;color:rgba(255,255,255,0.45);margin-bottom:12px;" data-i18n="step_loc">1. Point de prise en charge</p>
         <div class="calc-location" role="group" aria-label="Point de rendez-vous">
           <button class="loc-btn active" data-base="25" data-loc="kiss-fly">
             KISS&amp;FLY / GARE CFF
@@ -1626,55 +1659,55 @@
             <span class="loc-price">CHF 35</span>
           </button>
           <button class="loc-btn on-request" data-base="-1" data-loc="autre">
-            AUTRE LIEU
-            <span class="loc-price">Sur demande</span>
+            <span data-i18n="locOther">AUTRE LIEU</span>
+            <span class="loc-price" data-i18n="locOnRequest">Sur demande</span>
           </button>
         </div>
       </div>
 
       <!-- Step 2: Bags -->
       <div class="fade-up" style="transition-delay:0.1s">
-        <p style="font-size:0.75rem;text-transform:uppercase;letter-spacing:0.1em;color:rgba(255,255,255,0.45);margin-bottom:16px;">2. Nombre de bagages</p>
+        <p style="font-size:0.75rem;text-transform:uppercase;letter-spacing:0.1em;color:rgba(255,255,255,0.45);margin-bottom:16px;" data-i18n="step_bags">2. Nombre de bagages</p>
         <div class="calc-counter" role="group" aria-label="Nombre de bagages">
           <button class="calc-btn" id="btn-minus" aria-label="Réduire le nombre de bagages">−</button>
           <div class="calc-num" id="calc-num" aria-live="polite" aria-atomic="true">1</div>
           <button class="calc-btn" id="btn-plus" aria-label="Augmenter le nombre de bagages">+</button>
         </div>
-        <p style="font-size:0.85rem;color:rgba(255,255,255,0.5);margin-bottom:12px;">bagages</p>
+        <p style="font-size:0.85rem;color:rgba(255,255,255,0.5);margin-bottom:12px;" id="bags-label-text" data-i18n="bags_label">bagages</p>
         <div class="bag-icons" id="bag-icons" aria-hidden="true"></div>
       </div>
 
       <!-- Step 3: Info supplémentaire -->
       <div class="fade-up" style="transition-delay:0.15s">
-        <p style="font-size:0.75rem;text-transform:uppercase;letter-spacing:0.1em;color:rgba(255,255,255,0.45);margin-bottom:12px;">3. Informations tarifaires complémentaires</p>
+        <p style="font-size:0.75rem;text-transform:uppercase;letter-spacing:0.1em;color:rgba(255,255,255,0.45);margin-bottom:12px;" data-i18n="step_info">3. Informations tarifaires complémentaires</p>
         <div class="calc-options">
           <div class="calc-info-row">
             <div class="calc-option-left">
-              <span class="calc-option-name">Durée dépassant 30 min</span>
-              <span class="calc-option-desc">Service prolongé au-delà du forfait standard</span>
+              <span class="calc-option-name" data-i18n="opt1Name">Durée dépassant 30 min</span>
+              <span class="calc-option-desc" data-i18n="opt1Desc">Service prolongé au-delà du forfait standard</span>
             </div>
             <span class="calc-option-price">+CHF 27</span>
           </div>
           <div class="calc-info-row">
             <div class="calc-option-left">
-              <span class="calc-option-name">Agent supplémentaire</span>
-              <span class="calc-option-desc">Si nécessaire selon le volume ou la situation</span>
+              <span class="calc-option-name" data-i18n="opt2Name">Agent supplémentaire</span>
+              <span class="calc-option-desc" data-i18n="opt2Desc">Si nécessaire selon le volume ou la situation</span>
             </div>
             <span class="calc-option-price">+CHF 35</span>
           </div>
           <div class="calc-info-row">
             <div class="calc-option-left">
-              <span class="calc-option-name">Service groupe</span>
-              <span class="calc-option-desc">Voyage d'affaires, famille nombreuse, groupe organisé</span>
+              <span class="calc-option-name" data-i18n="opt3Name">Service groupe</span>
+              <span class="calc-option-desc" data-i18n="opt3Desc">Voyage d'affaires, famille nombreuse, groupe organisé</span>
             </div>
             <span class="calc-option-price">+CHF 75</span>
           </div>
         </div>
         <div class="agent-notice" id="agent-notice">
           <span class="agent-notice-icon">⚠️</span>
-          <p class="agent-notice-text"><strong>Agent supplémentaire requis</strong><br>Au-delà de 16 bagages, un second agent est nécessaire. <strong>+CHF 35</strong> ajoutés automatiquement au tarif.</p>
+          <p class="agent-notice-text" data-i18n="agentNoticeText"><strong>Agent supplémentaire requis</strong><br>Au-delà de 16 bagages, un second agent est nécessaire. <strong>+CHF 35</strong> ajoutés automatiquement au tarif.</p>
         </div>
-        <p style="font-size:0.78rem;color:rgba(255,255,255,0.55);margin-top:10px;text-align:left;">* Les suppléments durée et groupe sont confirmés lors de la réservation.</p>
+        <p style="font-size:0.78rem;color:rgba(255,255,255,0.55);margin-top:10px;text-align:left;" data-i18n="tarifNote">* Les suppléments durée et groupe sont confirmés lors de la réservation.</p>
       </div>
 
       <!-- Price breakdown -->
@@ -1688,17 +1721,17 @@
           <span id="price-extra-val">CHF 0</span>
         </div>
         <div class="price-extra" id="row-agent-auto">
-          <span>Agent supplémentaire (requis +16 bagages)</span>
+          <span data-i18n="agentAutoLabel">Agent supplémentaire (requis +16 bagages)</span>
           <span>CHF 35</span>
         </div>
         <hr class="price-divider" />
         <div class="price-total-row">
-          <span class="price-total-label">TOTAL</span>
+          <span class="price-total-label" data-i18n="totalLabel">TOTAL</span>
           <span class="price-total-val" id="price-total">CHF 25</span>
         </div>
       </div>
 
-      <div id="on-request-msg" style="display:none;padding:20px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.15);border-radius:var(--radius-lg);margin-bottom:28px;color:rgba(255,255,255,0.8);font-size:0.95rem;">
+      <div id="on-request-msg" style="display:none;padding:20px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.15);border-radius:var(--radius-lg);margin-bottom:28px;color:rgba(255,255,255,0.8);font-size:0.95rem;" data-i18n="onRequestText">
         📞 Pour ce lieu de prise en charge, le tarif est <strong style="color:var(--white)">sur demande</strong>.<br>
         Contactez-nous au <a href="tel:+41763307198" style="color:var(--accent);font-weight:700">+41 76 330 71 98</a>.
       </div>
@@ -1707,8 +1740,8 @@
       <div class="payment-notice fade-up" style="transition-delay:0.35s">
         <span class="payment-notice-icon">💵</span>
         <div class="payment-notice-body">
-          <strong>Paiement en espèces uniquement</strong>
-          <p>Nous acceptons les <strong>francs suisses (CHF)</strong> — devise préférée.<br>
+          <strong data-i18n="payTitle">Paiement en espèces uniquement</strong>
+          <p data-i18n="payDesc">Nous acceptons les <strong>francs suisses (CHF)</strong> — devise préférée.<br>
           Paiement en <strong>euros (€)</strong> accepté avec un supplément de <strong>+15 €</strong>.</p>
         </div>
       </div>
@@ -1725,8 +1758,8 @@
   <section id="gallery" aria-labelledby="gallery-title">
     <div class="gallery-inner">
       <div class="section-header center fade-up">
-        <h2 class="section-title" id="gallery-title">Notre équipe à l'aéroport de Genève</h2>
-        <p class="section-subtitle">Des professionnels certifiés dédiés à votre confort</p>
+        <h2 class="section-title" id="gallery-title" data-i18n="galleryTitle">Notre équipe à l'aéroport de Genève</h2>
+        <p class="section-subtitle" data-i18n="gallerySub">Des professionnels certifiés dédiés à votre confort</p>
       </div>
       <div class="carousel fade-up" id="carousel" style="transition-delay:0.15s">
         <div class="carousel-track" id="carousel-track">
@@ -1759,23 +1792,23 @@
   <section id="testimonials" aria-labelledby="testimonials-title">
     <div class="testimonials-inner">
       <div class="section-header center fade-up">
-        <h2 class="section-title" id="testimonials-title">Ce que disent nos clients</h2>
-        <p class="section-subtitle">Des milliers de voyageurs nous font confiance chaque année</p>
+        <h2 class="section-title" id="testimonials-title" data-i18n="testimTitle">Ce que disent nos clients</h2>
+        <p class="section-subtitle" data-i18n="testimSub">Des milliers de voyageurs nous font confiance chaque année</p>
       </div>
       <div class="testimonials-grid">
         <article class="testimonial-card fade-up">
           <div class="stars" aria-label="5 étoiles sur 5">★★★★★</div>
-          <p class="testimonial-text">"Service impeccable, notre porteur nous attendait avec la pancarte dès la sortie douane. Parfait pour notre famille avec beaucoup de bagages."</p>
+          <p class="testimonial-text" data-i18n="testim1">"Service impeccable, notre porteur nous attendait avec la pancarte dès la sortie douane. Parfait pour notre famille avec beaucoup de bagages."</p>
           <div class="testimonial-author">— Sophie M., Genève → Dubaï</div>
         </article>
         <article class="testimonial-card fade-up" style="transition-delay:0.15s">
           <div class="stars" aria-label="5 étoiles sur 5">★★★★★</div>
-          <p class="testimonial-text">"Idéal pour un départ tôt le matin avec 4 valises et deux enfants. Le porteur était ponctuel, aimable et efficace. Je recommande !"</p>
+          <p class="testimonial-text" data-i18n="testim2">"Idéal pour un départ tôt le matin avec 4 valises et deux enfants. Le porteur était ponctuel, aimable et efficace. Je recommande !"</p>
           <div class="testimonial-author">— Thomas K., Paris → Genève</div>
         </article>
         <article class="testimonial-card fade-up" style="transition-delay:0.3s">
           <div class="stars" aria-label="5 étoiles sur 5">★★★★★</div>
-          <p class="testimonial-text">"Personnel professionnel et efficace. Le Kiss&amp;Fly nous a sauvé la mise ! On a pu déposer les bagages sans chercher de parking."</p>
+          <p class="testimonial-text" data-i18n="testim3">"Personnel professionnel et efficace. Le Kiss&amp;Fly nous a sauvé la mise ! On a pu déposer les bagages sans chercher de parking."</p>
           <div class="testimonial-author">— Andreea P., Genève → Bucarest</div>
         </article>
       </div>
@@ -1787,7 +1820,7 @@
   ═══════════════════════════════════════ -->
   <section id="reservation" aria-labelledby="reservation-title">
     <div class="reservation-inner">
-      <h2 class="reservation-title fade-up" id="reservation-title">Faire une réservation</h2>
+      <h2 class="reservation-title fade-up" id="reservation-title" data-i18n="bookingTitle">Faire une réservation</h2>
       <div class="reservation-contacts fade-up">
         <div class="res-contact">📞 <strong>Genève GVA:</strong> +41 76 330 71 98</div>
         <div class="res-contact">✉️ <a href="mailto:dsps.gva@cgs-ltd.com" style="color:rgba(255,255,255,0.75)">dsps.gva@cgs-ltd.com</a></div>
@@ -1798,25 +1831,25 @@
 
           <!-- BLOCK: Données de base -->
           <div class="form-block">
-            <div class="form-block-title">Données de base</div>
+            <div class="form-block-title" data-i18n="blockBase">Données de base</div>
 
             <div class="form-row cols-3">
               <div class="form-group">
-                <label class="form-label" for="aeroport">Aéroport</label>
+                <label class="form-label" for="aeroport" data-i18n="lblAirport">Aéroport</label>
                 <select class="form-control" id="aeroport" name="aeroport">
-                  <option value="GVA-DEP">GENÈVE — DÉPART</option>
-                  <option value="GVA-ARR">GENÈVE — ARRIVÉE</option>
+                  <option value="GVA-DEP" data-i18n="optDep">GENÈVE — DÉPART</option>
+                  <option value="GVA-ARR" data-i18n="optArr">GENÈVE — ARRIVÉE</option>
                 </select>
               </div>
               <div class="form-group">
-                <label class="form-label">Service</label>
-                <div class="form-control" style="display:flex;align-items:center;color:var(--primary);font-weight:600;font-size:0.88rem;letter-spacing:0.03em;cursor:default;">
+                <label class="form-label" data-i18n="lblService">Service</label>
+                <div class="form-control" id="service-display" style="display:flex;align-items:center;color:var(--primary);font-weight:600;font-size:0.88rem;letter-spacing:0.03em;cursor:default;" data-i18n="serviceVal">
                   SERVICE DE BAGAGES
                 </div>
                 <input type="hidden" name="service" value="bagages" />
               </div>
               <div class="form-group" id="rdv-group">
-                <label class="form-label" for="rdv">Rendez-vous</label>
+                <label class="form-label" for="rdv" data-i18n="lblRdv">Rendez-vous</label>
                 <select class="form-control" id="rdv" name="rdv">
                   <option value="kiss-fly">KISS&amp;FLY</option>
                   <option value="gare-cff">GARE CFF (TRAIN STATION)</option>
@@ -1828,8 +1861,8 @@
                 </select>
               </div>
               <div class="form-group" id="tapis-group" style="display:none">
-                <label class="form-label">Rendez-vous</label>
-                <div class="form-control" style="display:flex;align-items:center;gap:8px;color:var(--primary);font-weight:600;font-size:0.85rem;cursor:default;">
+                <label class="form-label" data-i18n="lblRdv">Rendez-vous</label>
+                <div class="form-control" id="tapis-display" style="display:flex;align-items:center;gap:8px;color:var(--primary);font-weight:600;font-size:0.85rem;cursor:default;" data-i18n="tapislbl">
                   🧳 TAPIS DE RÉCUPÉRATION BAGAGES
                 </div>
               </div>
@@ -1837,53 +1870,53 @@
 
             <div class="form-row cols-3">
               <div class="form-group">
-                <label class="form-label" for="date">Date</label>
+                <label class="form-label" for="date" data-i18n="lblDate">Date</label>
                 <input class="form-control" type="date" id="date" name="date" />
               </div>
               <div class="form-group">
-                <label class="form-label" for="heure">Heure de départ</label>
+                <label class="form-label" for="heure" data-i18n="lblTime">Heure de départ</label>
                 <input class="form-control" type="time" id="heure" name="heure" />
               </div>
               <div class="form-group">
-                <label class="form-label" for="vol">Numéro de vol</label>
+                <label class="form-label" for="vol" data-i18n="lblFlight">Numéro de vol</label>
                 <input class="form-control" type="text" id="vol" name="vol" placeholder="ex. LX 647" />
               </div>
             </div>
 
             <div class="form-row">
               <div class="form-group">
-                <label class="form-label" for="destination">Destination</label>
-                <input class="form-control" type="text" id="destination" name="destination" placeholder="Ville ou pays de destination" />
+                <label class="form-label" for="destination" data-i18n="lblDest">Destination</label>
+                <input class="form-control" type="text" id="destination" name="destination" placeholder="Ville ou pays de destination" data-i18n-ph="phDest" />
               </div>
             </div>
           </div>
 
           <!-- BLOCK: Données du demandeur -->
           <div class="form-block">
-            <div class="form-block-title">Données du demandeur</div>
+            <div class="form-block-title" data-i18n="blockRequester">Données du demandeur</div>
             <div class="form-row cols-3">
               <div class="form-group">
-                <label class="form-label" for="nb-voyageurs">Nombre de voyageurs</label>
+                <label class="form-label" for="nb-voyageurs" data-i18n="lblPax">Nombre de voyageurs</label>
                 <input class="form-control" type="number" id="nb-voyageurs" name="nb-voyageurs" min="1" max="50" placeholder="1" />
               </div>
               <div class="form-group">
-                <label class="form-label" for="nb-bagages">Nombre de bagages</label>
+                <label class="form-label" for="nb-bagages" data-i18n="lblBags">Nombre de bagages</label>
                 <input class="form-control" type="number" id="nb-bagages" name="nb-bagages" min="1" max="50" placeholder="1" />
               </div>
               <div class="form-group">
-                <label class="form-label" for="plaque">Texte pour la plaque</label>
-                <input class="form-control" type="text" id="plaque" name="plaque" placeholder="Nom affiché sur la pancarte" />
+                <label class="form-label" for="plaque" data-i18n="lblSign">Texte pour la plaque</label>
+                <input class="form-control" type="text" id="plaque" name="plaque" placeholder="Nom affiché sur la pancarte" data-i18n-ph="phSign" />
               </div>
             </div>
           </div>
 
           <!-- BLOCK: Nom du demandeur -->
           <div class="form-block">
-            <div class="form-block-title">Nom du demandeur</div>
+            <div class="form-block-title" data-i18n="blockName">Nom du demandeur</div>
 
             <div class="form-row cols-3">
               <div class="form-group">
-                <label class="form-label" for="qualite">Qualité</label>
+                <label class="form-label" for="qualite" data-i18n="lblTitle">Qualité</label>
                 <select class="form-control" id="qualite" name="qualite">
                   <option value="M.">M.</option>
                   <option value="Mme">Mme</option>
@@ -1892,34 +1925,34 @@
                 </select>
               </div>
               <div class="form-group">
-                <label class="form-label" for="nom">Nom</label>
-                <input class="form-control" type="text" id="nom" name="nom" placeholder="Nom de famille" />
+                <label class="form-label" for="nom" data-i18n="lblLast">Nom</label>
+                <input class="form-control" type="text" id="nom" name="nom" placeholder="Nom de famille" data-i18n-ph="phLast" />
               </div>
               <div class="form-group">
-                <label class="form-label" for="prenom">Prénom</label>
-                <input class="form-control" type="text" id="prenom" name="prenom" placeholder="Prénom" />
+                <label class="form-label" for="prenom" data-i18n="lblFirst">Prénom</label>
+                <input class="form-control" type="text" id="prenom" name="prenom" placeholder="Prénom" data-i18n-ph="phFirst" />
               </div>
             </div>
 
             <div class="form-row cols-3">
               <div class="form-group">
-                <label class="form-label" for="email">E-mail <span style="color:var(--accent)">*</span></label>
-                <input class="form-control" type="email" id="email" name="email" placeholder="votre@email.com" required />
+                <label class="form-label" for="email" data-i18n="lblEmail">E-mail <span style="color:var(--accent)">*</span></label>
+                <input class="form-control" type="email" id="email" name="email" placeholder="votre@email.com" data-i18n-ph="phEmail" required />
               </div>
               <div class="form-group">
-                <label class="form-label" for="tel">Téléphone <span style="color:var(--accent)">*</span></label>
-                <input class="form-control" type="tel" id="tel" name="tel" placeholder="+41 xx xxx xx xx" required />
+                <label class="form-label" for="tel" data-i18n="lblPhone">Téléphone <span style="color:var(--accent)">*</span></label>
+                <input class="form-control" type="tel" id="tel" name="tel" placeholder="+41 xx xxx xx xx" />
               </div>
               <div class="form-group">
-                <label class="form-label" for="agence">Agence de voyage</label>
-                <input class="form-control" type="text" id="agence" name="agence" placeholder="Optionnel" />
+                <label class="form-label" for="agence" data-i18n="lblAgency">Agence de voyage</label>
+                <input class="form-control" type="text" id="agence" name="agence" placeholder="Optionnel" data-i18n-ph="phAgency" />
               </div>
             </div>
 
             <div class="form-row cols-2-1">
               <div class="form-group">
-                <label class="form-label" for="reference">Numéro de référence</label>
-                <input class="form-control" type="text" id="reference" name="reference" placeholder="Réf. agence ou dossier" />
+                <label class="form-label" for="reference" data-i18n="lblRef">Numéro de référence</label>
+                <input class="form-control" type="text" id="reference" name="reference" placeholder="Réf. agence ou dossier" data-i18n-ph="phRef" />
               </div>
               <div></div>
             </div>
@@ -1927,22 +1960,22 @@
             <div style="margin-bottom:16px">
               <label class="form-checkbox">
                 <input type="checkbox" name="same-data" />
-                <span>Les données des passagers sont les mêmes que celles des clients</span>
+                <span data-i18n="sameData">Les données des passagers sont les mêmes que celles des clients</span>
               </label>
             </div>
 
             <div class="form-group">
-              <label class="form-label" for="remarques">Remarques</label>
-              <textarea class="form-control" id="remarques" name="remarques" rows="4" placeholder="Informations complémentaires, demandes spéciales..."></textarea>
+              <label class="form-label" for="remarques" data-i18n="lblRemarks">Remarques</label>
+              <textarea class="form-control" id="remarques" name="remarques" rows="4" placeholder="Informations complémentaires, demandes spéciales..." data-i18n-ph="phRemarks"></textarea>
             </div>
           </div>
 
           <div class="form-payment-note">
             <span>💵</span>
-            <span><strong>Paiement en espèces uniquement</strong> — CHF de préférence. Euros acceptés avec supplément de +15 €.</span>
+            <span data-i18n="formPayNote"><strong>Paiement en espèces uniquement</strong> — CHF de préférence. Euros acceptés avec supplément de +15 €.</span>
           </div>
-          <button type="submit" class="btn btn-magenta form-submit">RÉSERVER →</button>
-          <div class="form-success" id="form-success" role="alert">
+          <button type="submit" class="btn btn-magenta form-submit" data-i18n="submitBtn">RÉSERVER →</button>
+          <div class="form-success" id="form-success" role="alert" data-i18n="successMsg">
             ✓ Votre réservation a été envoyée ! Nous vous contacterons rapidement.
           </div>
         </form>
@@ -1956,68 +1989,68 @@
   <section id="faq" aria-labelledby="faq-title">
     <div class="faq-inner">
       <div class="section-header center fade-up">
-        <h2 class="section-title" id="faq-title">Questions fréquentes</h2>
-        <p class="section-subtitle">Tout ce que vous devez savoir sur notre service</p>
+        <h2 class="section-title" id="faq-title" data-i18n="faqTitle">Questions fréquentes</h2>
+        <p class="section-subtitle" data-i18n="faqSub">Tout ce que vous devez savoir sur notre service</p>
       </div>
 
       <div class="faq-list fade-up">
         <div class="faq-item">
           <button class="faq-q" aria-expanded="false">
-            Comment réserver le service de porteur ?
+            <span data-i18n="faq1q">Comment réserver le service de porteur ?</span>
             <span class="faq-icon" aria-hidden="true">
               <svg viewBox="0 0 14 14" fill="none"><line x1="7" y1="2" x2="7" y2="12" stroke-width="2" stroke-linecap="round"/><line x1="2" y1="7" x2="12" y2="7" stroke-width="2" stroke-linecap="round"/></svg>
             </span>
           </button>
           <div class="faq-a" role="region">
-            <div class="faq-a-inner">Remplissez le formulaire en ligne ou appelez le +41 76 330 71 98. Réservation possible jusqu'à 24h avant votre vol.</div>
+            <div class="faq-a-inner" data-i18n="faq1a">Remplissez le formulaire en ligne ou appelez le +41 76 330 71 98. Réservation possible jusqu'à 24h avant votre vol.</div>
           </div>
         </div>
 
         <div class="faq-item">
           <button class="faq-q" aria-expanded="false">
-            Où se trouve le point de rendez-vous à GVA ?
+            <span data-i18n="faq2q">Où se trouve le point de rendez-vous à GVA ?</span>
             <span class="faq-icon" aria-hidden="true">
               <svg viewBox="0 0 14 14" fill="none"><line x1="7" y1="2" x2="7" y2="12" stroke-width="2" stroke-linecap="round"/><line x1="2" y1="7" x2="12" y2="7" stroke-width="2" stroke-linecap="round"/></svg>
             </span>
           </button>
           <div class="faq-a" role="region">
-            <div class="faq-a-inner">Départs : entrée principale Terminal 1. Arrivées : salle de récupération bagages avec pancarte nominative à votre nom.</div>
+            <div class="faq-a-inner" data-i18n="faq2a">Départs : entrée principale Terminal 1. Arrivées : salle de récupération bagages avec pancarte nominative à votre nom.</div>
           </div>
         </div>
 
         <div class="faq-item">
           <button class="faq-q" aria-expanded="false">
-            Quels bagages acceptez-vous ?
+            <span data-i18n="faq3q">Quels bagages acceptez-vous ?</span>
             <span class="faq-icon" aria-hidden="true">
               <svg viewBox="0 0 14 14" fill="none"><line x1="7" y1="2" x2="7" y2="12" stroke-width="2" stroke-linecap="round"/><line x1="2" y1="7" x2="12" y2="7" stroke-width="2" stroke-linecap="round"/></svg>
             </span>
           </button>
           <div class="faq-a" role="region">
-            <div class="faq-a-inner">Tous types : valises, sacs, vélos, skis, poussettes, objets volumineux. Charge maximale 70 kg par chariot.</div>
+            <div class="faq-a-inner" data-i18n="faq3a">Tous types : valises, sacs, vélos, skis, poussettes, objets volumineux. Charge maximale 70 kg par chariot.</div>
           </div>
         </div>
 
         <div class="faq-item">
           <button class="faq-q" aria-expanded="false">
-            Puis-je annuler ma réservation ?
+            <span data-i18n="faq4q">Puis-je annuler ma réservation ?</span>
             <span class="faq-icon" aria-hidden="true">
               <svg viewBox="0 0 14 14" fill="none"><line x1="7" y1="2" x2="7" y2="12" stroke-width="2" stroke-linecap="round"/><line x1="2" y1="7" x2="12" y2="7" stroke-width="2" stroke-linecap="round"/></svg>
             </span>
           </button>
           <div class="faq-a" role="region">
-            <div class="faq-a-inner">Oui, annulation gratuite jusqu'à 12h avant le service. Par téléphone ou email à <a href="mailto:dsps.gva@cgs-ltd.com" style="color:var(--accent)">dsps.gva@cgs-ltd.com</a>.</div>
+            <div class="faq-a-inner" data-i18n="faq4a">Oui, annulation gratuite jusqu'à 12h avant le service. Par téléphone ou email à <a href="mailto:dsps.gva@cgs-ltd.com" style="color:var(--accent)">dsps.gva@cgs-ltd.com</a>.</div>
           </div>
         </div>
 
         <div class="faq-item">
           <button class="faq-q" aria-expanded="false">
-            Le service est-il disponible tous les jours ?
+            <span data-i18n="faq5q">Le service est-il disponible tous les jours ?</span>
             <span class="faq-icon" aria-hidden="true">
               <svg viewBox="0 0 14 14" fill="none"><line x1="7" y1="2" x2="7" y2="12" stroke-width="2" stroke-linecap="round"/><line x1="2" y1="7" x2="12" y2="7" stroke-width="2" stroke-linecap="round"/></svg>
             </span>
           </button>
           <div class="faq-a" role="region">
-            <div class="faq-a-inner">Oui, 7 jours sur 7 y compris jours fériés, horaires adaptés aux premiers et derniers vols.</div>
+            <div class="faq-a-inner" data-i18n="faq5a">Oui, 7 jours sur 7 y compris jours fériés, horaires adaptés aux premiers et derniers vols.</div>
           </div>
         </div>
       </div>
@@ -2029,9 +2062,9 @@
   ═══════════════════════════════════════ -->
   <section id="final-cta" aria-label="Appel à l'action">
     <div class="fade-up">
-      <h2 class="final-title">Prêt à voyager sans stress ?</h2>
-      <p class="final-sub">Réservez votre porteur en 2 minutes</p>
-      <a href="#reservation" class="btn btn-magenta btn-lg">Réserver maintenant →</a>
+      <h2 class="final-title" data-i18n="ctaTitle">Prêt à voyager sans stress ?</h2>
+      <p class="final-sub" data-i18n="ctaSub">Réservez votre porteur en 2 minutes</p>
+      <a href="#reservation" class="btn btn-magenta btn-lg" data-i18n="ctaBtn">Réserver maintenant →</a>
       <p class="final-phone">+41 (0)76 330 71 98</p>
       <p class="final-email"><a href="mailto:dsps.gva@cgs-ltd.com">dsps.gva@cgs-ltd.com</a></p>
     </div>
@@ -2044,29 +2077,29 @@
     <div class="footer-grid">
       <div class="footer-brand">
         <img src="foto%20de%20cgs%20/CGS_Customer_Ground_Services_Logo_RGB.png" alt="CGS Porter Service" class="footer-logo" style="filter:brightness(0) invert(1)" onerror="this.style.display='none'" />
-        <p class="footer-tagline">Votre partenaire aéroportuaire à Genève</p>
+        <p class="footer-tagline" data-i18n="footerTagline">Votre partenaire aéroportuaire à Genève</p>
       </div>
       <nav class="footer-nav" aria-label="Liens du pied de page">
-        <div class="footer-nav-title">Navigation</div>
-        <a href="#hero">Accueil</a>
-        <a href="#services">Services</a>
-        <a href="#tarifs">Tarifs</a>
-        <a href="#reservation">Réserver</a>
-        <a href="#faq">Contact</a>
+        <div class="footer-nav-title" data-i18n="footerNavTitle">Navigation</div>
+        <a href="#hero" data-i18n="footerHome">Accueil</a>
+        <a href="#services" data-i18n="footerServices">Services</a>
+        <a href="#tarifs" data-i18n="footerPricing">Tarifs</a>
+        <a href="#reservation" data-i18n="footerBook">Réserver</a>
+        <a href="#faq" data-i18n="footerContact">Contact</a>
       </nav>
       <div class="footer-contact">
-        <div class="footer-nav-title">Contact</div>
+        <div class="footer-nav-title" data-i18n="footerContactTitle">Contact</div>
         <div class="footer-contact-item">
           <a href="tel:+41763307198">+41 76 330 71 98</a>
         </div>
         <div class="footer-contact-item">
           <a href="mailto:dsps.gva@cgs-ltd.com">dsps.gva@cgs-ltd.com</a>
         </div>
-        <div class="footer-contact-item">Aéroport International GVA</div>
+        <div class="footer-contact-item" data-i18n="footerLocation">Aéroport International GVA</div>
       </div>
     </div>
     <div class="footer-bottom">
-      <p class="footer-copy">© 2025 CGS Ltd — Tous droits réservés</p>
+      <p class="footer-copy" data-i18n="footerCopy">© 2025 CGS Ltd — Tous droits réservés</p>
       <p class="footer-copy"><a href="https://cgs-ltd.com" style="color:rgba(255,255,255,0.4);transition:color 0.2s" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='rgba(255,255,255,0.4)'">cgs-ltd.com</a></p>
     </div>
   </footer>
@@ -2170,12 +2203,7 @@
     const labelBase = document.getElementById('label-base');
     const valBase = document.getElementById('val-base');
 
-    const LOC_LABELS = {
-      'kiss-fly': 'KISS&FLY / GARE CFF',
-      'p1-p21':   'P1 / P20 / P21',
-      'p26-p51':  'P26 / P51',
-      'autre':    'Autre lieu'
-    };
+    // LOC_LABELS now comes from TRANS[currentLang].locLabels (set after TRANS is defined)
 
     function bump(el) {
       el.classList.remove('bump');
@@ -2203,14 +2231,16 @@
       if (bags > 8) {
         const more = document.createElement('span');
         more.className = 'bag-more';
-        more.textContent = `+${bags - 8} de plus`;
+        const Tb = (typeof TRANS !== 'undefined' && typeof currentLang !== 'undefined') ? TRANS[currentLang] : null;
+        more.textContent = Tb ? Tb.bagMore(bags - 8) : `+${bags - 8} de plus`;
         bagIcons.appendChild(more);
       }
 
       if (isOnRequest) {
         priceCardWrapper.style.display = 'none';
         onRequestMsg.style.display = 'block';
-        calcCta.textContent = 'Contacter pour un devis →';
+        const Tq = (typeof TRANS !== 'undefined' && typeof currentLang !== 'undefined') ? TRANS[currentLang] : null;
+        calcCta.textContent = Tq ? Tq.calcCtaOnRequest : 'Contacter pour un devis →';
         nbBagagesField.value = bags;
         return;
       }
@@ -2218,16 +2248,18 @@
       priceCardWrapper.style.display = 'block';
       onRequestMsg.style.display = 'none';
 
-      // Base row
+      // Base row — use current language
+      const T = (typeof TRANS !== 'undefined' && typeof currentLang !== 'undefined') ? TRANS[currentLang] : null;
       const currentLoc = document.querySelector('.loc-btn.active');
       const locKey = currentLoc ? currentLoc.dataset.loc : 'kiss-fly';
-      labelBase.innerHTML = `Forfait 1–3 bagages (${LOC_LABELS[locKey] || ''})`;
+      const locName = T ? (T.locLabels[locKey] || '') : locKey;
+      labelBase.innerHTML = T ? T.packageLabel(locName) : `Forfait 1–3 bagages (${locName})`;
       valBase.textContent = `CHF ${basePrice}`;
 
       // Extra bags line
       if (extra > 0) {
         priceExtra.classList.add('show');
-        priceExtraLabel.textContent = `+ ${extra} bagage${extra > 1 ? 's' : ''} supplémentaire${extra > 1 ? 's' : ''}`;
+        priceExtraLabel.textContent = T ? T.extraBagsLabel(extra) : `+ ${extra} bagage${extra > 1 ? 's' : ''} supplémentaire${extra > 1 ? 's' : ''}`;
         priceExtraVal.textContent = `CHF ${extraCost}`;
       } else {
         priceExtra.classList.remove('show');
@@ -2245,7 +2277,7 @@
 
       priceTotal.textContent = `CHF ${total}`;
       bump(priceTotal);
-      calcCta.textContent = `Réserver pour CHF ${total} →`;
+      calcCta.textContent = T ? T.calcCtaText(total) : `Réserver pour CHF ${total} →`;
 
       nbBagagesField.value = bags;
     }
@@ -2455,6 +2487,263 @@
       card.style.transitionDelay = `${i * 0.1}s`;
       fadeObserver.observe(card);
     });
+
+    /* ── BILINGUAL i18n ── */
+    const TRANS = {
+      fr: {
+        pageTitle: 'CGS Porter Service — Aéroport de Genève GVA',
+        metaDesc: 'CGS Porter Service — Service de porteur professionnel à l\'aéroport de Genève GVA. Départ, arrivée, transit. Disponible 7j/7. Dès CHF 25.',
+        navServices:'Services', navTarifs:'Tarifs', navGallery:'Galerie', navFaq:'FAQ', navBook:'Réserver',
+        heroBadge:'✈ Service officiel — Aéroport de Genève GVA',
+        heroH1:'Votre service de porteur à l\'aéroport de Genève',
+        heroSub:'Confiez vos bagages à des professionnels. Départ, arrivée, transit — nous gérons tout.',
+        heroBookBtn:'Réserver maintenant →', heroPriceBtn:'Calculer le tarif',
+        heroTrust1Html:'<span class="trust-check">✓</span> Disponible 7j/7',
+        heroTrust2Html:'<span class="trust-check">✓</span> Dès CHF 25',
+        heroTrust3Html:'<span class="trust-check">✓</span> Équipe certifiée GVA',
+        stat1Label:'Voyageurs servis', stat2Number:'7j/7', stat2Label:'Disponible',
+        stat3Number:'Dès 25 <span style="font-size:1.5rem">CHF</span>', stat3Label:'Par service',
+        stat4Label:'Ans d\'expérience',
+        howTitle:'Comment ça fonctionne',
+        howSub:'Un processus simple en 3 étapes pour voyager sans effort',
+        step1Title:'Réservez en ligne', step1Text:'Remplissez le formulaire avec vos informations de vol et le nombre de bagages.',
+        step2Title:'On vous retrouve', step2Text:'Notre porteur vous attend avec votre pancarte nominative au point de rendez-vous convenu.',
+        step3Title:'Voyagez léger', step3Text:'Nous gérons vos bagages de A à Z jusqu\'à destination finale.',
+        servicesTitle:'Nos services', servicesSub:'Une gamme complète pour chaque étape de votre voyage',
+        dep_badge:'DÉPART', dep_title:'Service de Départ',
+        dep_desc:'Votre porteur vous accompagne de l\'entrée jusqu\'au check-in et au contrôle de sécurité. Vous arrivez détendus à votre gate sans porter un seul bagage.',
+        arr_badge:'ARRIVÉE', arr_title:'Service d\'Arrivée',
+        arr_desc:'Récupération de vos bagages au tapis, accompagnement jusqu\'à la sortie, voiture ou taxi. Aucun effort de votre côté après un long voyage.',
+        whoTitle:'À qui s\'adresse notre service ?', whoSub:'Solutions adaptées aux particuliers comme aux professionnels',
+        part_badge:'Particuliers', part_title:'Voyageurs individuels &amp; familles',
+        part_desc:'Que vous voyagiez seul avec une valise ou en famille avec de nombreux bagages — <strong>nous nous adaptons à chaque situation</strong>, sans minimum ni maximum.',
+        part_li1:'De <strong>1 bagage</strong> à autant que vous en avez',
+        part_li2:'Départ &amp; Arrivée — Aéroport de Genève GVA',
+        part_li3:'Kiss &amp; Fly, Gare CFF, Hall terminal',
+        part_li4:'Objets volumineux (skis, vélos, poussettes…)',
+        part_li5:'Tarif transparent dès <strong>CHF 25</strong>',
+        b2b_badge:'B2B', b2b_title:'Entreprises &amp; Grands Groupes',
+        b2b_desc:'Des solutions sur-mesure pour les <strong>professionnels et groupes organisés</strong>. Coordination complète, gestion logistique et service prioritaire.',
+        b2b_li1:'Entreprises &amp; voyages d\'affaires',
+        b2b_li2:'Équipes de football &amp; clubs sportifs',
+        b2b_li3:'Ambassades &amp; délégations officielles',
+        b2b_li4:'Groupes touristiques &amp; séminaires',
+        b2b_li5:'Devis personnalisé sur demande',
+        tarifTitle:'Calculez votre tarif en temps réel',
+        tarifSub:'Tarif transparent, sans surprise — Aéroport de Genève GVA',
+        step_loc:'1. Point de prise en charge', locOther:'AUTRE LIEU', locOnRequest:'Sur demande',
+        step_bags:'2. Nombre de bagages', bags_label:'bagages',
+        step_info:'3. Informations tarifaires complémentaires',
+        opt1Name:'Durée dépassant 30 min', opt1Desc:'Service prolongé au-delà du forfait standard',
+        opt2Name:'Agent supplémentaire', opt2Desc:'Si nécessaire selon le volume ou la situation',
+        opt3Name:'Service groupe', opt3Desc:'Voyage d\'affaires, famille nombreuse, groupe organisé',
+        agentNoticeText:'<strong>Agent supplémentaire requis</strong><br>Au-delà de 16 bagages, un second agent est nécessaire. <strong>+CHF 35</strong> ajoutés automatiquement au tarif.',
+        tarifNote:'* Les suppléments durée et groupe sont confirmés lors de la réservation.',
+        totalLabel:'TOTAL',
+        agentAutoLabel:'Agent supplémentaire (requis +16 bagages)',
+        onRequestText:'📞 Pour ce lieu de prise en charge, le tarif est <strong style="color:var(--white)">sur demande</strong>.<br>Contactez-nous au <a href="tel:+41763307198" style="color:var(--accent);font-weight:700">+41 76 330 71 98</a>.',
+        payTitle:'<strong>Paiement en espèces uniquement</strong>',
+        payDesc:'Nous acceptons les <strong>francs suisses (CHF)</strong> — devise préférée.<br>Paiement en <strong>euros (€)</strong> accepté avec un supplément de <strong>+15 €</strong>.',
+        formPayNote:'<strong>Paiement en espèces uniquement</strong> — CHF de préférence. Euros acceptés avec supplément de +15 €.',
+        galleryTitle:'Notre équipe à l\'aéroport de Genève', gallerySub:'Des professionnels certifiés dédiés à votre confort',
+        testimTitle:'Ce que disent nos clients', testimSub:'Des milliers de voyageurs nous font confiance chaque année',
+        testim1:'"Service impeccable, notre porteur nous attendait avec la pancarte dès la sortie douane. Parfait pour notre famille avec beaucoup de bagages."',
+        testim2:'"Idéal pour un départ tôt le matin avec 4 valises et deux enfants. Le porteur était ponctuel, aimable et efficace. Je recommande !"',
+        testim3:'"Personnel professionnel et efficace. Le Kiss&amp;Fly nous a sauvé la mise ! On a pu déposer les bagages sans chercher de parking."',
+        bookingTitle:'Faire une réservation', blockBase:'Données de base',
+        lblAirport:'Aéroport', optDep:'GENÈVE — DÉPART', optArr:'GENÈVE — ARRIVÉE',
+        lblService:'Service', serviceVal:'SERVICE DE BAGAGES', lblRdv:'Rendez-vous',
+        tapislbl:'🧳 TAPIS DE RÉCUPÉRATION BAGAGES',
+        lblDate:'Date', lblTime:'Heure de départ', lblFlight:'Numéro de vol', lblDest:'Destination',
+        phDest:'Ville ou pays de destination',
+        blockRequester:'Données du demandeur', lblPax:'Nombre de voyageurs',
+        lblBags:'Nombre de bagages', lblSign:'Texte pour la plaque', phSign:'Nom affiché sur la pancarte',
+        blockName:'Nom du demandeur', lblTitle:'Qualité', lblLast:'Nom', lblFirst:'Prénom',
+        phLast:'Nom de famille', phFirst:'Prénom', lblEmail:'E-mail <span style="color:var(--accent)">*</span>',
+        phEmail:'votre@email.com', lblPhone:'Téléphone <span style="color:var(--accent)">*</span>',
+        lblAgency:'Agence de voyage', phAgency:'Optionnel', lblRef:'Numéro de référence',
+        phRef:'Réf. agence ou dossier',
+        sameData:'Les données des passagers sont les mêmes que celles des clients',
+        lblRemarks:'Remarques', phRemarks:'Informations complémentaires, demandes spéciales...',
+        submitBtn:'RÉSERVER →', successMsg:'✓ Votre réservation a été envoyée ! Nous vous contacterons rapidement.',
+        faqTitle:'Questions fréquentes', faqSub:'Tout ce que vous devez savoir sur notre service',
+        faq1q:'Comment réserver le service de porteur ?',
+        faq1a:'Remplissez le formulaire en ligne ou appelez le +41 76 330 71 98. Réservation possible jusqu\'à 24h avant votre vol.',
+        faq2q:'Où se trouve le point de rendez-vous à GVA ?',
+        faq2a:'Départs : entrée principale Terminal 1. Arrivées : salle de récupération bagages avec pancarte nominative à votre nom.',
+        faq3q:'Quels bagages acceptez-vous ?',
+        faq3a:'Tous types : valises, sacs, vélos, skis, poussettes, objets volumineux. Charge maximale 70 kg par chariot.',
+        faq4q:'Puis-je annuler ma réservation ?',
+        faq4a:'Oui, annulation gratuite jusqu\'à 12h avant le service. Par téléphone ou email à <a href="mailto:dsps.gva@cgs-ltd.com" style="color:var(--accent)">dsps.gva@cgs-ltd.com</a>.',
+        faq5q:'Le service est-il disponible tous les jours ?',
+        faq5a:'Oui, 7 jours sur 7 y compris jours fériés, horaires adaptés aux premiers et derniers vols.',
+        ctaTitle:'Prêt à voyager sans stress ?', ctaSub:'Réservez votre porteur en 2 minutes', ctaBtn:'Réserver maintenant →',
+        footerTagline:'Votre partenaire aéroportuaire à Genève',
+        footerNavTitle:'Navigation', footerHome:'Accueil', footerServices:'Services',
+        footerPricing:'Tarifs', footerBook:'Réserver', footerContact:'Contact',
+        footerContactTitle:'Contact', footerLocation:'Aéroport International GVA',
+        footerCopy:'© 2025 CGS Ltd — Tous droits réservés',
+        navCta:'Réserver',
+        locLabels:{'kiss-fly':'KISS&FLY / GARE CFF','p1-p21':'P1 / P20 / P21','p26-p51':'P26 / P51','autre':'Autre lieu'},
+        packageLabel:(loc) => `Forfait 1–3 bagages (${loc})`,
+        extraBagsLabel:(n) => `+ ${n} bagage${n>1?'s':''} supplémentaire${n>1?'s':''}`,
+        calcCtaText:(total) => `Réserver pour CHF ${total} →`,
+        calcCtaOnRequest:'Contacter pour un devis →',
+        bagMore:(n) => `+${n} de plus`,
+      },
+      en: {
+        pageTitle: 'CGS Porter Service — Geneva Airport GVA',
+        metaDesc: 'CGS Porter Service — Professional porter service at Geneva Airport GVA. Departure, arrival, transit. Available 7/7. From CHF 25.',
+        navServices:'Services', navTarifs:'Pricing', navGallery:'Gallery', navFaq:'FAQ', navBook:'Book',
+        heroBadge:'✈ Official Service — Geneva Airport GVA',
+        heroH1:'Your porter service at Geneva Airport',
+        heroSub:'Entrust your luggage to professionals. Departure, arrival, transit — we handle everything.',
+        heroBookBtn:'Book now →', heroPriceBtn:'Calculate price',
+        heroTrust1Html:'<span class="trust-check">✓</span> Available 7/7',
+        heroTrust2Html:'<span class="trust-check">✓</span> From CHF 25',
+        heroTrust3Html:'<span class="trust-check">✓</span> GVA certified team',
+        stat1Label:'Passengers served', stat2Number:'7/7', stat2Label:'Available',
+        stat3Number:'From 25 <span style="font-size:1.5rem">CHF</span>', stat3Label:'Per service',
+        stat4Label:'Years of experience',
+        howTitle:'How it works',
+        howSub:'A simple 3-step process to travel effortlessly',
+        step1Title:'Book online', step1Text:'Fill in the form with your flight details and number of bags.',
+        step2Title:'We meet you', step2Text:'Our porter waits for you with your name sign at the agreed meeting point.',
+        step3Title:'Travel light', step3Text:'We handle your luggage from A to Z to your final destination.',
+        servicesTitle:'Our services', servicesSub:'A complete range for every step of your journey',
+        dep_badge:'DEPARTURE', dep_title:'Departure Service',
+        dep_desc:'Your porter accompanies you from the entrance to check-in and security. You arrive relaxed at your gate without carrying a single bag.',
+        arr_badge:'ARRIVAL', arr_title:'Arrival Service',
+        arr_desc:'Baggage collection at the carousel, escorted to the exit, car or taxi. No effort on your part after a long journey.',
+        whoTitle:'Who is our service for?', whoSub:'Tailored solutions for individuals and professionals',
+        part_badge:'Individuals', part_title:'Individual travelers &amp; families',
+        part_desc:'Whether you travel alone with one suitcase or as a family with many bags — <strong>we adapt to every situation</strong>, with no minimum or maximum.',
+        part_li1:'From <strong>1 bag</strong> to as many as you have',
+        part_li2:'Departure &amp; Arrival — Geneva Airport GVA',
+        part_li3:'Kiss &amp; Fly, CFF Station, Terminal Hall',
+        part_li4:'Bulky items (skis, bikes, strollers…)',
+        part_li5:'Transparent pricing from <strong>CHF 25</strong>',
+        b2b_badge:'B2B', b2b_title:'Companies &amp; Large Groups',
+        b2b_desc:'Tailor-made solutions for <strong>professionals and organised groups</strong>. Complete coordination, logistics management and priority service.',
+        b2b_li1:'Companies &amp; business travel',
+        b2b_li2:'Football teams &amp; sports clubs',
+        b2b_li3:'Embassies &amp; official delegations',
+        b2b_li4:'Tourist groups &amp; seminars',
+        b2b_li5:'Custom quote on request',
+        tarifTitle:'Calculate your price in real time',
+        tarifSub:'Transparent pricing, no surprises — Geneva Airport GVA',
+        step_loc:'1. Pick-up point', locOther:'OTHER LOCATION', locOnRequest:'On request',
+        step_bags:'2. Number of bags', bags_label:'bags',
+        step_info:'3. Additional pricing information',
+        opt1Name:'Duration exceeding 30 min', opt1Desc:'Extended service beyond the standard package',
+        opt2Name:'Additional agent', opt2Desc:'If required depending on volume or situation',
+        opt3Name:'Group service', opt3Desc:'Business travel, large family, organised group',
+        agentNoticeText:'<strong>Additional agent required</strong><br>Beyond 16 bags, a second agent is required. <strong>+CHF 35</strong> added automatically to the price.',
+        tarifNote:'* Duration and group surcharges are confirmed at booking.',
+        totalLabel:'TOTAL',
+        agentAutoLabel:'Additional agent (required +16 bags)',
+        onRequestText:'📞 For this pick-up location, the price is <strong style="color:var(--white)">on request</strong>.<br>Contact us at <a href="tel:+41763307198" style="color:var(--accent);font-weight:700">+41 76 330 71 98</a>.',
+        payTitle:'<strong>Cash payment only</strong>',
+        payDesc:'We accept <strong>Swiss francs (CHF)</strong> — preferred currency.<br>Payment in <strong>euros (€)</strong> accepted with a <strong>+€15</strong> surcharge.',
+        formPayNote:'<strong>Cash payment only</strong> — CHF preferred. Euros accepted with +€15 surcharge.',
+        galleryTitle:'Our team at Geneva Airport', gallerySub:'Certified professionals dedicated to your comfort',
+        testimTitle:'What our clients say', testimSub:'Thousands of travellers trust us every year',
+        testim1:'"Impeccable service, our porter was waiting for us with the sign right at customs exit. Perfect for our family with a lot of luggage."',
+        testim2:'"Ideal for an early morning departure with 4 suitcases and two children. The porter was punctual, friendly and efficient. Highly recommended!"',
+        testim3:'"Professional and efficient staff. The Kiss&amp;Fly saved the day! We could drop the bags without looking for parking."',
+        bookingTitle:'Make a booking', blockBase:'Basic data',
+        lblAirport:'Airport', optDep:'GENEVA — DEPARTURE', optArr:'GENEVA — ARRIVAL',
+        lblService:'Service', serviceVal:'BAGGAGE SERVICE', lblRdv:'Meeting point',
+        tapislbl:'🧳 BAGGAGE CLAIM CAROUSEL',
+        lblDate:'Date', lblTime:'Departure time', lblFlight:'Flight number', lblDest:'Destination',
+        phDest:'City or country of destination',
+        blockRequester:'Requester data', lblPax:'Number of passengers',
+        lblBags:'Number of bags', lblSign:'Text for the sign', phSign:'Name displayed on the sign',
+        blockName:'Requester name', lblTitle:'Title', lblLast:'Last name', lblFirst:'First name',
+        phLast:'Last name', phFirst:'First name', lblEmail:'E-mail <span style="color:var(--accent)">*</span>',
+        phEmail:'your@email.com', lblPhone:'Phone <span style="color:var(--accent)">*</span>',
+        lblAgency:'Travel agency', phAgency:'Optional', lblRef:'Reference number',
+        phRef:'Agency or file ref.',
+        sameData:'Passenger data is the same as client data',
+        lblRemarks:'Remarks', phRemarks:'Additional information, special requests...',
+        submitBtn:'BOOK →', successMsg:'✓ Your booking has been sent! We will contact you shortly.',
+        faqTitle:'Frequently asked questions', faqSub:'Everything you need to know about our service',
+        faq1q:'How do I book the porter service?',
+        faq1a:'Fill in the online form or call +41 76 330 71 98. Booking possible up to 24 hours before your flight.',
+        faq2q:'Where is the meeting point at GVA?',
+        faq2a:'Departures: main entrance Terminal 1. Arrivals: baggage claim area with a name sign in your name.',
+        faq3q:'What luggage do you accept?',
+        faq3a:'All types: suitcases, bags, bikes, skis, strollers, bulky items. Maximum load 70 kg per trolley.',
+        faq4q:'Can I cancel my booking?',
+        faq4a:'Yes, free cancellation up to 12 hours before the service. By phone or email at <a href="mailto:dsps.gva@cgs-ltd.com" style="color:var(--accent)">dsps.gva@cgs-ltd.com</a>.',
+        faq5q:'Is the service available every day?',
+        faq5a:'Yes, 7 days a week including public holidays, hours adapted to first and last flights.',
+        ctaTitle:'Ready to travel stress-free?', ctaSub:'Book your porter in 2 minutes', ctaBtn:'Book now →',
+        footerTagline:'Your airport partner in Geneva',
+        footerNavTitle:'Navigation', footerHome:'Home', footerServices:'Services',
+        footerPricing:'Pricing', footerBook:'Book', footerContact:'Contact',
+        footerContactTitle:'Contact', footerLocation:'Geneva International Airport GVA',
+        footerCopy:'© 2025 CGS Ltd — All rights reserved',
+        navCta:'Book',
+        locLabels:{'kiss-fly':'KISS&FLY / CFF STATION','p1-p21':'P1 / P20 / P21','p26-p51':'P26 / P51','autre':'Other location'},
+        packageLabel:(loc) => `Package 1–3 bags (${loc})`,
+        extraBagsLabel:(n) => `+ ${n} extra bag${n>1?'s':''}`,
+        calcCtaText:(total) => `Book for CHF ${total} →`,
+        calcCtaOnRequest:'Contact us for a quote →',
+        bagMore:(n) => `+${n} more`,
+      }
+    };
+
+    let currentLang = localStorage.getItem('cgs-lang') || 'fr';
+
+    function setLang(lang) {
+      currentLang = lang;
+      localStorage.setItem('cgs-lang', lang);
+      const T = TRANS[lang];
+      document.documentElement.lang = lang;
+      document.title = T.pageTitle;
+      const metaEl = document.querySelector('meta[name="description"]');
+      if (metaEl) metaEl.setAttribute('content', T.metaDesc);
+
+      // Update all data-i18n elements
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (T[key] !== undefined) el.innerHTML = T[key];
+      });
+
+      // Update placeholders
+      document.querySelectorAll('[data-i18n-ph]').forEach(el => {
+        const key = el.getAttribute('data-i18n-ph');
+        if (T[key] !== undefined) el.placeholder = T[key];
+      });
+
+      // Update select option text (airport)
+      const aerEl = document.getElementById('aeroport');
+      if (aerEl) {
+        aerEl.options[0].text = T.optDep;
+        aerEl.options[1].text = T.optArr;
+      }
+
+      // Lang buttons active state
+      ['btn-lang-fr','mob-btn-fr'].forEach(id => {
+        const b = document.getElementById(id);
+        if (b) b.classList.toggle('active', lang === 'fr');
+      });
+      ['btn-lang-en','mob-btn-en'].forEach(id => {
+        const b = document.getElementById(id);
+        if (b) b.classList.toggle('active', lang === 'en');
+      });
+
+      // Nav CTA button
+      const navCtaBtn = document.getElementById('nav-cta-btn');
+      if (navCtaBtn) navCtaBtn.textContent = T.navBook;
+
+      // Re-run calculator to update dynamic labels
+      updateCalc();
+    }
+
+    // Init language on load
+    setLang(currentLang);
 
   </script>
 </body>
