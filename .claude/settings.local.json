@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git -C \"/Users/nexalab/Downloads/Porteur Service Proyect\" status)",
+      "Bash(gh auth:*)",
+      "Bash(git --version)"
+    ]
+  }
+}
